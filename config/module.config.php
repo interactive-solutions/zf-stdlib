@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: jonas
- * Date: 2014-09-10
- * Time: 17:28
+ * @author Erik Norgren <erik.norgren@interactivesolutions.se>
+ * @copyright Interactive Solutions
  */
 
 use Doctrine\ORM\EntityManager;
