@@ -1,7 +1,17 @@
 # Interactive-solutions\zf-stdlib
 
 Contains useful utility classes that are compatible with Zend Framework, or with doctrine
-that simplify our lifes as developer.
+that simplify our lifes as developer. We will try and document the most important things. 
+
+
+## Injecting query sorting into criteria
+
+A Mvc controller plugin `injectSortingIntoCriteria` that handles injecting sorting into a
+doctrine criteria object. The expected query string format is the following `?sorting=<field>:<direction>`
+and having multiple sorting criteria just semi colon separate it. 
+
+Example `?sorting=name:asc,age:desc` would add the following to the criteria `['name' => 'ASC', 'age' => 'desc']` 
+
 
 ## Validators
 A collection of custom validators that we are written, many of
