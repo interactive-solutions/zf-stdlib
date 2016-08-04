@@ -10,5 +10,4 @@ use DoctrineModule\Validator\ObjectExists as DoctrineObjectExists;
 
 class ObjectExists extends DoctrineObjectExists
 {
-
 }

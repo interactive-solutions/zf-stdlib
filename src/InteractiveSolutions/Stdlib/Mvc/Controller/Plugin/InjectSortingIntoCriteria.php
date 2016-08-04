@@ -8,9 +8,8 @@
 namespace InteractiveSolutions\Stdlib\Mvc\Controller\Plugin;
 
 use Doctrine\Common\Collections\Criteria;
-use DomainException;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
-use ZfrRest\Mvc\Controller\AbstractRestfulController;
+use Zend\Mvc\Controller\AbstractController;
 
 /**
  * Controller plugin that takes the sorting from the query string and injects it into a doctrine criteria object
@@ -19,8 +18,8 @@ class InjectSortingIntoCriteria extends AbstractPlugin
 {
     public function __invoke(Criteria $criteria)
     {
-        if (!$this->getController() instanceof AbstractRestfulController) {
-            throw new DomainException('Dude, wtf really ?');
+        if (!$this->getController() instanceof AbstractController) {
+            throw new \LogicException('Cannot locate the controller');
         }
 
         $sort = $this->getController()->params()->fromQuery('sorting');
