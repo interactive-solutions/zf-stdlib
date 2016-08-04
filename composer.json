@@ -1,0 +1,30 @@
+{
+  "name": "interactive-solutions/zf-stdlib",
+  "authors": [
+    {
+      "name":  "Jonas Eriksson",
+      "email": "jonas.eriksson+git@interactivesolutions.se"
+    },
+    {
+      "name": "Erik Norgren",
+      "email": "erik.norgren@interactivesolutions.se"
+    },
+    {
+      "name": "Antoine Hedgecock",
+      "email": "antoine.hedgecock@interactivesolutions.se"
+    }
+  ],
+  "require": {
+    "php":                          ">=5.5",
+    "zendframework/zendframework":  "~2.3"
+  },
+
+  "autoload": {
+    "psr-0": {
+      "InteractiveSolutions\\Stdlib\\": "src/"
+    },
+    "classmap": [
+      "./Module.php"
+    ]
+  }
+}
