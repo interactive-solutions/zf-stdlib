@@ -14,7 +14,7 @@ Example `?sorting=name:asc,age:desc` would add the following to the criteria `['
 
 
 ## Validators
-A collection of custom validators that we are written, many of
+A collection of custom validators that we have written
 
 #### InteractiveSolutions\Stdlib\Validator\(NoObjectExists|ObjectExists)
 They are very very similar to the ones provided by `DoctrineORMModule` but they have an extra benefit
@@ -35,3 +35,8 @@ This validator applies the another validator to each time in the array provided 
 #### InteractiveSolutions\Stdlib\Validator\AllEntitiesExistsValidator
 
 A bit like the previous validator it applies a exists check to all the entities in the array
+
+#### InteractiveSolutions\Stdlib\Validator\InputFilterCollectionValidator
+
+This is so that you can add collections that is optional
+Just add a option['inputFilterClass'] and point to your inputfilter, it will fetch it, and run isValid. 
