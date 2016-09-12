@@ -38,7 +38,7 @@ class ArrayElementValidator extends AbstractValidator
     /**
      * {@inheritdoc}
      */
-    public function isValid($value)
+    public function isValid($value, $data = [])
     {
         if (!is_array($value)) {
             $this->error(static::ERROR_NOT_ARRAY);
@@ -47,7 +47,7 @@ class ArrayElementValidator extends AbstractValidator
         }
 
         foreach ($value as $element) {
-            if (!$this->elementValidator->isValid($element)) {
+            if (!$this->elementValidator->isValid($element, $data)) {
                 $this->error(static::ERROR_NOT_ALL_VALID);
 
                 return false;
