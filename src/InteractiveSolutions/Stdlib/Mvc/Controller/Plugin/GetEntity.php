@@ -68,8 +68,8 @@ final class GetEntity extends AbstractPlugin
         if (!$entity) {
             throw new NotFoundException($notFoundMessage);
         }
-
-        if (!$controller->isGranted($permission, $entity)) {
+        
+        if ($permission && !$controller->isGranted($permission, $entity)) {
             if ($controller->identity()) {
                 throw new ForbiddenException();
             }
