@@ -10,8 +10,8 @@ namespace InteractiveSolutions\Stdlib\Mvc\Controller\Plugin;
 
 use Doctrine\ORM\EntityManager;
 use DomainException;
-use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use ZfcRbac\Service\AuthorizationService;
 use ZfrRest\Http\Exception\Client\ForbiddenException;
 use ZfrRest\Http\Exception\Client\NotFoundException;
 use ZfrRest\Http\Exception\Client\UnauthorizedException;
@@ -27,12 +27,19 @@ final class GetEntity extends AbstractPlugin
     private $entityManager;
 
     /**
+     * @var AuthorizationService
+     */
+    private $authorizationService;
+
+    /**
      * GetEntity constructor.
      * @param EntityManager $entityManager
+     * @param AuthorizationService $authorizationService
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, AuthorizationService $authorizationService)
     {
-        $this->entityManager = $entityManager;
+        $this->entityManager        = $entityManager;
+        $this->authorizationService = $authorizationService;
     }
 
     /**
@@ -43,6 +50,8 @@ final class GetEntity extends AbstractPlugin
      *
      * @return object
      *
+     * @throws \Doctrine\ORM\TransactionRequiredException
+     * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \DomainException
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\ORMInvalidArgumentException
@@ -56,21 +65,14 @@ final class GetEntity extends AbstractPlugin
         string $permission = null,
         string $notFoundMessage = 'The resource you were looking for was not found'
     ) {
-        /* @var AbstractController $controller */
-        $controller = $this->getController();
-
-        if (!$controller instanceof AbstractController) {
-            throw new DomainException('Are you stupid ?');
-        }
-
         $entity = $this->entityManager->find($className, $id);
 
         if (!$entity) {
             throw new NotFoundException($notFoundMessage);
         }
-        
-        if ($permission && !$controller->isGranted($permission, $entity)) {
-            if ($controller->identity()) {
+
+        if ($permission && !$this->authorizationService->isGranted($permission, $entity)) {
+            if ($this->authorizationService->getIdentity()) {
                 throw new ForbiddenException();
             }
 
