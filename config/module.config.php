@@ -5,11 +5,13 @@
  */
 
 use Doctrine\ORM\EntityManager;
+use InteractiveSolutions\Stdlib\Factory\Mvc\Controller\Plugin\GetEntityFactory;
 use InteractiveSolutions\Stdlib\Factory\Validator\AllEntitiesExistsValidatorFactory;
 use InteractiveSolutions\Stdlib\Factory\Validator\ArrayElementValidatorFactory;
 use InteractiveSolutions\Stdlib\Factory\Validator\InputFilterCollectionValidatorFactory;
 use InteractiveSolutions\Stdlib\Factory\Validator\NoObjectExistsFactory;
 use InteractiveSolutions\Stdlib\Factory\Validator\ObjectExistsFactory;
+use InteractiveSolutions\Stdlib\Mvc\Controller\Plugin\GetEntity;
 use InteractiveSolutions\Stdlib\Mvc\Controller\Plugin\InjectSortingIntoCriteria;
 use InteractiveSolutions\Stdlib\Validator\AllEntitiesExistsValidator;
 use InteractiveSolutions\Stdlib\Validator\ArrayElementValidator;
@@ -25,12 +27,17 @@ return [
     ],
 
     'controller_plugins' => [
+        'factories' => [
+            GetEntity::class => GetEntityFactory::class,
+        ],
+
         'invokables' => [
             InjectSortingIntoCriteria::class => InjectSortingIntoCriteria::class
         ],
 
         'aliases' => [
-            'injectSortingIntoCriteria' => InjectSortingIntoCriteria::class
+            'injectSortingIntoCriteria' => InjectSortingIntoCriteria::class,
+            'getEntity'                 => GetEntity::class,
         ]
     ],
 
