@@ -14,6 +14,21 @@ use Zend\Hydrator\Strategy\DefaultStrategy;
 class DateTimeStrategy extends DefaultStrategy
 {
     /**
+     * @var string
+     */
+    private $format;
+
+    /**
+     * DateTimeStrategy constructor.
+     *
+     * @param string $format
+     */
+    public function __construct($format = DateTime::ISO8601)
+    {
+        $this->format = $format;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * Convert a string value into a DateTime object
@@ -38,6 +53,6 @@ class DateTimeStrategy extends DefaultStrategy
             return null;
         }
 
-        return $value->format(DateTime::ISO8601);
+        return $value->format($this->format);
     }
 }
