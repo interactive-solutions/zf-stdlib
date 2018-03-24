@@ -50,6 +50,7 @@ class ArrayElementValidator extends AbstractValidator
     {
         $this->keyValidator   = $options['keyValidator'] ?? null;
         $this->valueValidator = $options['valueValidator'] ?? null;
+        $this->validationMode = $options['validationMode'] ?? self::VALIDATE_VALUE;
 
         parent::__construct($options);
     }
