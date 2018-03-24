@@ -43,10 +43,13 @@ class ArrayElementValidatorFactory implements FactoryInterface, MutableCreationO
     public function createService(ServiceLocatorInterface $validatorManager)
     {
         $keyValidator   = $this->options['keyValidatorClass'] ?? null;
-        $valueValidator = $this->options['valueValidatorClass'] ?? $this->options['validatorClass'] ?? null;
+        $keyOptions = $this->options['keyValidatorOptions'] ?? [];
 
-        $keyValidator   = $keyValidator !== null ? $validatorManager->get($keyValidator) : null;
-        $valueValidator = $valueValidator !== null ? $validatorManager->get($valueValidator) : null;
+        $valueValidator = $this->options['valueValidatorClass'] ?? $this->options['validatorClass'] ?? null;
+        $valueOptions = $this->options['valueValidatorOptions'] ?? [];
+
+        $keyValidator   = $keyValidator !== null ? $validatorManager->get($keyValidator, $keyOptions) : null;
+        $valueValidator = $valueValidator !== null ? $validatorManager->get($valueValidator, $valueOptions) : null;
 
         return new ArrayElementValidator(
             array_merge(
