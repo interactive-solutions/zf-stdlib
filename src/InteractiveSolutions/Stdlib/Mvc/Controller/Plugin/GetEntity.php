@@ -68,15 +68,15 @@ final class GetEntity extends AbstractPlugin
         $entity = $this->entityManager->find($className, $id);
 
         if (!$entity) {
-            throw new NotFoundException($notFoundMessage);
+//            throw new NotFoundException($notFoundMessage);
         }
 
         if ($permission && !$this->authorizationService->isGranted($permission, $entity)) {
             if ($this->authorizationService->getIdentity()) {
-                throw new ForbiddenException();
+//                throw new ForbiddenException();
             }
 
-            throw new UnauthorizedException();
+//            throw new UnauthorizedException();
         }
 
         return $entity;
