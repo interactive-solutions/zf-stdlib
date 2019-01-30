@@ -12,7 +12,6 @@ namespace InteractiveSolutions\Stdlib\Factory\Mvc\Controller\Plugin;
 use InteractiveSolutions\Stdlib\Mvc\Controller\Plugin\ValidateIncomingData;
 use Psr\Container\ContainerInterface;
 use Zend\InputFilter\InputFilterPluginManager;
-use Zend\Mvc\Controller\PluginManager;
 
 final class ValidateIncomingDataFactory
 {
