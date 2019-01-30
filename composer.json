@@ -15,8 +15,8 @@
     }
   ],
   "require": {
-    "php":                          ">=7.2",
-    "zendframework/zendframework":  "~2.3 || ^3.0.0"
+    "php":                          ">=7.3",
+    "zendframework/zendframework":  "^3.0.0"
   },
 
   "autoload": {

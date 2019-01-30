@@ -9,47 +9,29 @@ declare(strict_types=1);
 namespace InteractiveSolutions\Stdlib\Factory\Validator;
 
 use InteractiveSolutions\Stdlib\Validator\ArrayElementValidator;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\MutableCreationOptionsInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Validator\ValidatorPluginManager;
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 
-class ArrayElementValidatorFactory implements FactoryInterface, MutableCreationOptionsInterface
+class ArrayElementValidatorFactory implements FactoryInterface
 {
-    /**
-     * @var array
-     */
-    protected $options;
-
-    /**
-     * Set creation options
-     *
-     * @param  array $options
-     *
-     * @return void
-     */
-    public function setCreationOptions(array $options)
-    {
-        $this->options = $options;
-    }
-
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface|ValidatorPluginManager $validatorManager
-     *
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
      * @return ArrayElementValidator
      */
-    public function createService(ServiceLocatorInterface $validatorManager)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $keyValidator   = $this->options['keyValidatorClass'] ?? null;
-        $keyOptions = $this->options['keyValidatorOptions'] ?? [];
+        $keyValidator   = $options['keyValidatorClass'] ?? null;
+        $keyOptions = $options['keyValidatorOptions'] ?? [];
 
-        $valueValidator = $this->options['valueValidatorClass'] ?? $this->options['validatorClass'] ?? null;
-        $valueOptions = $this->options['valueValidatorOptions'] ?? [];
+        $valueValidator = $options['valueValidatorClass'] ?? $options['validatorClass'] ?? null;
+        $valueOptions = $options['valueValidatorOptions'] ?? [];
 
-        $keyValidator   = $keyValidator !== null ? $validatorManager->get($keyValidator, $keyOptions) : null;
-        $valueValidator = $valueValidator !== null ? $validatorManager->get($valueValidator, $valueOptions) : null;
+        $keyValidator   = $keyValidator !== null ? $container->get($keyValidator, $keyOptions) : null;
+        $valueValidator = $valueValidator !== null ? $container->get($valueValidator, $valueOptions) : null;
 
         return new ArrayElementValidator(
             array_merge(
@@ -57,7 +39,7 @@ class ArrayElementValidatorFactory implements FactoryInterface, MutableCreationO
                     'keyValidator'   => $keyValidator,
                     'valueValidator' => $valueValidator,
                 ],
-                $this->options
+                $options
             )
         );
     }
