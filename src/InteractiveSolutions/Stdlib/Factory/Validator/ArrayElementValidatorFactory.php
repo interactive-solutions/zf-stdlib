@@ -11,6 +11,7 @@ namespace InteractiveSolutions\Stdlib\Factory\Validator;
 use InteractiveSolutions\Stdlib\Validator\ArrayElementValidator;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
+use Zend\Validator\ValidatorPluginManager;
 
 class ArrayElementValidatorFactory implements FactoryInterface
 {
@@ -30,8 +31,11 @@ class ArrayElementValidatorFactory implements FactoryInterface
         $valueValidator = $options['valueValidatorClass'] ?? $options['validatorClass'] ?? null;
         $valueOptions = $options['valueValidatorOptions'] ?? [];
 
-        $keyValidator   = $keyValidator !== null ? $container->get($keyValidator, $keyOptions) : null;
-        $valueValidator = $valueValidator !== null ? $container->get($valueValidator, $valueOptions) : null;
+        /** @var ValidatorPluginManager $validatorPluginManager */
+        $validatorPluginManager = $container->get(ValidatorPluginManager::class);
+
+        $keyValidator   = $keyValidator !== null ? $validatorPluginManager->get($keyValidator, $keyOptions) : null;
+        $valueValidator = $valueValidator !== null ? $validatorPluginManager->get($valueValidator, $valueOptions) : null;
 
         return new ArrayElementValidator(
             array_merge(
