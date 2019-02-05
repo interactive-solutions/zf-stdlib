@@ -9,45 +9,29 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\Stdlib\Factory\Validator;
 
 use InteractiveSolutions\Stdlib\Validator\InputFilterCollectionValidator;
+use Interop\Container\ContainerInterface;
 use Zend\InputFilter\InputFilterPluginManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\MutableCreationOptionsInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Validator\ValidatorPluginManager;
+use Zend\ServiceManager\Factory\FactoryInterface;
 
-final class InputFilterCollectionValidatorFactory implements FactoryInterface, MutableCreationOptionsInterface
+final class InputFilterCollectionValidatorFactory implements FactoryInterface
 {
-    /**
-     * @var array
-     */
-    protected $options;
-
-    /**
-     * Set creation options
-     *
-     * @param  array $options
-     * @return void
-     */
-    public function setCreationOptions(array $options)
-    {
-        $this->options = $options;
-    }
-
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface|ValidatorPluginManager $validatorManager
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
      * @return InputFilterCollectionValidator
      */
-    public function createService(ServiceLocatorInterface $validatorManager)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         /* @var InputFilterPluginManager $inputFilterManager */
-        $inputFilterManager = $validatorManager->getServiceLocator()->get('InputFilterManager');
+        $inputFilterManager = $container->get('InputFilterManager');
 
         return new InputFilterCollectionValidator(
             array_merge(
-                ['inputFilter' => $inputFilterManager->get($this->options['inputFilterClass'])],
-                $this->options
+                ['inputFilter' => $inputFilterManager->get($options['inputFilterClass'])],
+                $options
             )
         );
     }

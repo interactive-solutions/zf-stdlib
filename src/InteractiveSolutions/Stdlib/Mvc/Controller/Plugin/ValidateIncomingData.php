@@ -63,7 +63,7 @@ class ValidateIncomingData extends AbstractPlugin
             return $inputFilter->getValues();
         }
 
-        throw new UnprocessableEntityException('Validation error', $inputFilter->getMessages());
+//        throw new UnprocessableEntityException('Validation error', $inputFilter->getMessages());
     }
 }
 
